@@ -72,13 +72,119 @@
                 },
             }
         });
-        
-
 
         const openModal = () => {
             $('#staticModal').modal({
                 'show': true
             })
+        }
+
+        try {
+            //bar chart
+            var ctx = document.getElementById("barChart");
+            var label = new Array();
+
+            for (var i = 1; i <= "{{ \Carbon\Carbon::now()->daysInMonth }}"; i++) {
+                label.push(i);        
+            }
+
+            if (ctx) {
+                ctx.height = 200;
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    defaultFontFamily: 'Poppins',
+                    data: {
+                    labels: label,
+                    datasets: [
+                        {
+                        label: "Data penjualan bulan " + "{{ \Carbon\Carbon::now()->format('F') }}",
+                        data: [65, 59, 80, 81, 56, 55, 40],
+                        borderColor: "rgba(0, 123, 255, 0.9)",
+                        borderWidth: "0",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)",
+                        fontFamily: "Poppins"
+                        },
+                    ]
+                    },
+                    options: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                        fontFamily: 'Poppins'
+                        }
+
+                    },
+                    scales: {
+                        xAxes: [{
+                        ticks: {
+                            fontFamily: "Poppins"
+
+                        }
+                        }],
+                        yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontFamily: "Poppins"
+                        }
+                        }]
+                    }
+                    }
+                });
+            }
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+
+            //pie chart
+            var ctx = document.getElementById("pieChart");
+            console.log("{{ $productBaseOnCategory }}");
+            if (ctx) {
+                ctx.height = 200;
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: [
+                        "rgba(0, 123, 255,0.9)",
+                        "rgba(0, 123, 255,0.7)",
+                        "rgba(0, 123, 255,0.5)",
+                        "rgba(0,0,0,0.07)"
+                        ],
+                        hoverBackgroundColor: [
+                        "rgba(0, 123, 255,0.9)",
+                        "rgba(0, 123, 255,0.7)",
+                        "rgba(0, 123, 255,0.5)",
+                        "rgba(0,0,0,0.07)"
+                        ]
+
+                    }],
+                    labels: [
+                        "Green",
+                        "Green",
+                        "Green"
+                    ]
+                    },
+                    options: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                        fontFamily: 'Poppins'
+                        }
+
+                    },
+                    responsive: true
+                    }
+                });
+            }
+
+
+        } catch (error) {
+            console.log(error);
         }
     </script>
 @endsection
@@ -97,7 +203,22 @@
                             <div class="card-body">
                                 <h3 class="mb-3">Produk</h3>
                                 <div class="row">
-                             
+                                    <div class="col-lg-6">
+                                        <div class="au-card m-b-30">
+                                            <div class="au-card-inner">
+                                                <h3 class="title-2 m-b-40">Penjualan bulan - {{ \Carbon\Carbon::now()->format('F'); }}  </h3>
+                                                <canvas id="barChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>        
+                                    <div class="col-lg-6">
+                                        <div class="au-card m-b-30">
+                                            <div class="au-card-inner">
+                                                <h3 class="title-2 m-b-40">Kategori Produk</h3>
+                                                <canvas id="pieChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>        
                                 </div>
                             </div>
                             <div class="card-footer text-center">

@@ -873,65 +873,7 @@
     console.log(error);
   }
 
-  try {
-    //bar chart
-    var ctx = document.getElementById("barChart");
-    if (ctx) {
-      ctx.height = 200;
-      var myChart = new Chart(ctx, {
-        type: 'bar',
-        defaultFontFamily: 'Poppins',
-        data: {
-          labels: ["January", "February", "March", "April", "May", "June", "July"],
-          datasets: [
-            {
-              label: "My First dataset",
-              data: [65, 59, 80, 81, 56, 55, 40],
-              borderColor: "rgba(0, 123, 255, 0.9)",
-              borderWidth: "0",
-              backgroundColor: "rgba(0, 123, 255, 0.5)",
-              fontFamily: "Poppins"
-            },
-            {
-              label: "My Second dataset",
-              data: [28, 48, 40, 19, 86, 27, 90],
-              borderColor: "rgba(0,0,0,0.09)",
-              borderWidth: "0",
-              backgroundColor: "rgba(0,0,0,0.07)",
-              fontFamily: "Poppins"
-            }
-          ]
-        },
-        options: {
-          legend: {
-            position: 'top',
-            labels: {
-              fontFamily: 'Poppins'
-            }
 
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                fontFamily: "Poppins"
-
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                fontFamily: "Poppins"
-              }
-            }]
-          }
-        }
-      });
-    }
-
-
-  } catch (error) {
-    console.log(error);
-  }
 
   try {
 
@@ -1081,56 +1023,6 @@
           }],
           labels: [
             "Green",
-            "Green",
-            "Green",
-            "Green"
-          ]
-        },
-        options: {
-          legend: {
-            position: 'top',
-            labels: {
-              fontFamily: 'Poppins'
-            }
-
-          },
-          responsive: true
-        }
-      });
-    }
-
-
-  } catch (error) {
-    console.log(error);
-  }
-
-
-  try {
-
-    //pie chart
-    var ctx = document.getElementById("pieChart");
-    if (ctx) {
-      ctx.height = 200;
-      var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: [45, 25, 20, 10],
-            backgroundColor: [
-              "rgba(0, 123, 255,0.9)",
-              "rgba(0, 123, 255,0.7)",
-              "rgba(0, 123, 255,0.5)",
-              "rgba(0,0,0,0.07)"
-            ],
-            hoverBackgroundColor: [
-              "rgba(0, 123, 255,0.9)",
-              "rgba(0, 123, 255,0.7)",
-              "rgba(0, 123, 255,0.5)",
-              "rgba(0,0,0,0.07)"
-            ]
-
-          }],
-          labels: [
             "Green",
             "Green",
             "Green"
