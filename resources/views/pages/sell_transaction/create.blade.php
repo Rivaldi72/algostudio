@@ -227,7 +227,7 @@
                                                     <th>No</th>
                                                     <th>Produk</th>
                                                     <th>Code</th>
-                                                    <th>harga Perproduk</th>
+                                                    <th>Harga Perproduk</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>

@@ -83,6 +83,7 @@
             //bar chart
             var ctx = document.getElementById("barChart");
             var label = new Array();
+            var data = @json($transaction);
 
             for (var i = 1; i <= "{{ \Carbon\Carbon::now()->daysInMonth }}"; i++) {
                 label.push(i);        
@@ -98,7 +99,7 @@
                     datasets: [
                         {
                         label: "Data penjualan bulan " + "{{ \Carbon\Carbon::now()->format('F') }}",
-                        data: [65, 59, 80, 81, 56, 55, 40],
+                        data: data,
                         borderColor: "rgba(0, 123, 255, 0.9)",
                         borderWidth: "0",
                         backgroundColor: "rgba(0, 123, 255, 0.5)",
@@ -141,33 +142,42 @@
 
             //pie chart
             var ctx = document.getElementById("pieChart");
-            console.log("{{ $productBaseOnCategory }}");
+            var data = @json($productBaseOnCategory);
+            var label = new Array();
+            var value = new Array();
+            var total = 0;
+
+            for (var i = 0; i < data.length; i++) {
+                label.push(data[i]['name']);        
+                total += data[i]['value'];
+            }
+            for (var i = 0; i < data.length; i++) {
+                value.push(data[i]['value'] / total * 100);        
+            }
+
             if (ctx) {
-                ctx.height = 200;
                 var myChart = new Chart(ctx, {
                     type: 'pie',
                     data: {
                     datasets: [{
-                        data: [45, 25, 20, 10],
+                        data: value,
                         backgroundColor: [
-                        "rgba(0, 123, 255,0.9)",
-                        "rgba(0, 123, 255,0.7)",
-                        "rgba(0, 123, 255,0.5)",
-                        "rgba(0,0,0,0.07)"
+                        "rgba(0, 0, 255, 0.9)",
+                        "rgba(0, 255, 0, 0.7)",
+                        "rgba(255, 0, 0, 0.5)",
+                        "rgba(255,255,0,0.7)",
+                        "rgba(255,0,255,0.7)"
                         ],
                         hoverBackgroundColor: [
-                        "rgba(0, 123, 255,0.9)",
-                        "rgba(0, 123, 255,0.7)",
-                        "rgba(0, 123, 255,0.5)",
-                        "rgba(0,0,0,0.07)"
+                        "rgba(0, 0, 255, 0.9)",
+                        "rgba(0, 255, 0, 0.7)",
+                        "rgba(255, 0, 0, 0.5)",
+                        "rgba(255,255,0,0.7)",
+                        "rgba(255,0,255,0.7)"
                         ]
 
                     }],
-                    labels: [
-                        "Green",
-                        "Green",
-                        "Green"
-                    ]
+                    labels: label
                     },
                     options: {
                     legend: {
@@ -201,7 +211,7 @@
                                 <h4 class="title" style="color: white">Dashboard</h4>
                             </div>
                             <div class="card-body">
-                                <h3 class="mb-3">Produk</h3>
+                                <h3 class="mb-3">Statistik Penjualan</h3>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="au-card m-b-30">
@@ -214,11 +224,41 @@
                                     <div class="col-lg-6">
                                         <div class="au-card m-b-30">
                                             <div class="au-card-inner">
-                                                <h3 class="title-2 m-b-40">Kategori Produk</h3>
+                                                <h3 class="title-2 m-b-40">Kategori Produk (%)</h3>
                                                 <canvas id="pieChart"></canvas>
                                             </div>
                                         </div>
                                     </div>        
+                                </div>
+                                <h3 class="mb-3">10 Transaksi Terakhir</h3>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive pt-2">
+                                            <table class="table table-bordered table-active" id="list-datatables">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Invoice</th>
+                                                        <th>Pembeli</th>
+                                                        <th>Total</th>
+                                                        <th>Tanggal Transaksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($lastTenData as $key => $value)
+                                                        <tr>
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>{{ $value->invoice }}</td>
+                                                            <td>{{ $value->consumen }}</td>
+                                                            <td>{{ "Rp " . number_format($value->total, 2, ',', '.') }}</td>
+                                                            <td>{{ $value->created_at }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>        
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer text-center">
